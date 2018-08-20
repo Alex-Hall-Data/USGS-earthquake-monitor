@@ -38,6 +38,8 @@ while(True):
     
     title = last_quake.get('properties').get('title')
     magnitude = last_quake.get('properties').get('mag')
+    q_time = last_quake.get('properties').get('time')
+    q_time=time.strftime("%D %H:%M", time.gmtime(int(str(q_time)[0:9])))
     
     #look for mag 7+ earthquakes in last day
     i=0
@@ -50,21 +52,31 @@ while(True):
         if(mag >= 7):
             hi_mag_quake=True
             hi_quake = feed[i].get('properties').get('title')
+            hq_time = feed[i].get('properties').get('time')
+            hq_time = time.strftime("%D %H:%M", time.gmtime(int(str(hq_time)[0:9])))
         else:
             hi_quake = None
         
         i=i+1
         
-    #print results
+    #print results to lcd
     if (hi_mag_quake):
-        print ("SEVERE QUAKE IN LAST 24 HOURS")
-        time.sleep(2.0)
-        print(hi_quake)
+        lcd.message("SEVERE QUAKE\nIN LAST 24 HOURS")
         time.sleep(5.0)
         
-    print('last quake:')
-    print(title)
-    time.sleep(10.0)
+	#print details of hi mag quake
+        lcd.message(hq_time + hi_quake)
+
+        for i in range(lcd_columns + len(hi_quake)+len(hq_time)):
+                time.sleep(0.3)
+                lcd.move_left()
+        
+    #print last quake    
+    lcd.message('last quake: '+q_time+title)
+    for i in range(lcd_columns+len(title)+len(q_time)):
+        time.sleep(0.3)
+        lcd.move_left()
+    
         
         
     
