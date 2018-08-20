@@ -13,7 +13,7 @@ while(True):
     
     #query api and retrieve data for last 24 hours
     feed = QuakeFeed("4.5", "day")
-    last_quake = feed[len(feed)-1]
+    last_quake = feed[0]
     
     title = last_quake.get('properties').get('title')
     magnitude = last_quake.get('properties').get('mag')
