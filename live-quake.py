@@ -9,6 +9,14 @@ from quakefeeds import QuakeFeed
 import time
 import math
 import Adafruit_CharLCD as LCD
+import RPi.GPIO as GPIO
+
+#setup pins
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(12,GPIO.OUT)
+
+
 
 #setup lcd
 
@@ -33,6 +41,7 @@ lcd = LCD.Adafruit_CharLCD(lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6, lcd_d7,
 while(True):
 
     lcd.clear()
+    GPIO.output(12,GPIO.LOW)
     
     #query api and retrieve data for last 24 hours
     feed = QuakeFeed("4.5", "day")
@@ -65,6 +74,7 @@ while(True):
 
     #print details of hi mag quake
     if(hi_mag_quake):
+        GPIO.output(12,GPIO.HIGH)
         for i in range(len(hi_quake)+len(hq_time)):
             lcd.clear()
             lcd.message('MAG 7+ QUAKE' + '\n')
