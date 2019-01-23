@@ -118,6 +118,10 @@ while(True):
             lcd.message(alert_msg)
             time.sleep(0.3)
             lcd.move_left()
+            if(i%2==0):
+                GPIO.output(12,GPIO.HIGH)
+            else:
+                GPIO.output(12,GPIO.LOW)
 
          
  
