@@ -9,6 +9,7 @@ from quakefeeds import QuakeFeed
 import time
 import math
 import Adafruit_CharLCD as LCD
+import aurorawatchuk
 
 #setup lcd
 
@@ -76,7 +77,25 @@ while(True):
     for i in range(lcd_columns+len(title)+len(q_time)):
         time.sleep(0.3)
         lcd.move_left()
+        
+        
+    #AURORA DATA
+    aurorawatchuk.user_agent = 'test'
+    awuk = aurorawatchuk.AuroraWatchUK(raise_=False)
+    stat = awuk.status
     
+    lcd.message("Aurora Status:\n"+ awuk.status.level)
+    time.sleep(5)
+    
+    lcd.message("Disturbance:\n"+ awuk.activity.latest.value + "nT")
+    time.sleep(5)
+    
+    alert_msg = 'AURORA BOREALIS' + 'AT THIS TIME OF THE YEAR...IN THIS PART OF THE COUNTRY'
+    if(awuk.status == "red"):
+        lcd.message(alert_msg)
+        for i in range(lcd_columns+len(alert_msg)):
+            time.sleep(0.3)
+            lcd.move_left()
         
         
     
