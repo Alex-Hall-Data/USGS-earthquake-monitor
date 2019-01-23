@@ -9,9 +9,7 @@ from quakefeeds import QuakeFeed
 import time
 import math
 import Adafruit_CharLCD as LCD
-<<<<<<< HEAD
 import aurorawatchuk
-=======
 import RPi.GPIO as GPIO
 
 #setup pins
@@ -20,7 +18,6 @@ GPIO.setwarnings(False)
 GPIO.setup(12,GPIO.OUT)
 
 
->>>>>>> 0f54ced615ea225991d7885db366bfcdce86f8a8
 
 #setup lcd
 
@@ -91,8 +88,10 @@ while(True):
     for i in range(len(title) + len(q_time)):
         lcd.clear()
         lcd.message('last quake' + '\n')
+        lcd.message(('  ' + title+ '  ' +q_time)[i:i+lcd_columns])
+        time.sleep(0.3)   
         
-<<<<<<< HEAD
+
     #print last quake    
     lcd.message('last quake: '+q_time+title)
     for i in range(lcd_columns+len(title)+len(q_time)):
@@ -111,17 +110,18 @@ while(True):
     lcd.message("Disturbance:\n"+ awuk.activity.latest.value + "nT")
     time.sleep(5)
     
-    alert_msg = 'AURORA BOREALIS' + 'AT THIS TIME OF THE YEAR...IN THIS PART OF THE COUNTRY'
+    alert_msg = 'AT THIS TIME OF THE YEAR...IN THIS PART OF THE COUNTRY'
     if(awuk.status == "red"):
-        lcd.message(alert_msg)
         for i in range(lcd_columns+len(alert_msg)):
+            lcd.clear()
+            lcd.message("AURORA BOREALIS" + "\n")
+            lcd.message(alert_msg)
             time.sleep(0.3)
             lcd.move_left()
-=======
-        lcd.message(('  ' + title+ '  ' +q_time)[i:i+lcd_columns])
-        time.sleep(0.3)    
+
+         
  
->>>>>>> 0f54ced615ea225991d7885db366bfcdce86f8a8
+
         
         
     
